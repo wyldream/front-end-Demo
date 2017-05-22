@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .top button{
+            width:40px;
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+        }
+        .bottom div{
+            width: 230px;
+            height: 200px;
+            background-color: red;
+            border:1px solid yellow;
+            display: none;
+        }
+        .bottom .display{
+            display: block;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload=function () {
+            var top=document.getElementById("top");
+            var bottom=document.getElementById("bottom");
+            var buttons=top.getElementsByTagName("button");
+            var bottoms=bottom.getElementsByTagName("div");
+            /*for(var i=0;i<buttons.length;i++){
+                buttons[i].index = i;
+                buttons[i].onmouseover = function () {
+                    for(var j=0;j<buttons.length;j++){
+                        buttons[j].style.backgroundColor="";
+                        bottoms[j].className="";
+                    }
+                    this.style.backgroundColor="pink";
+                    bottoms[this.index].className="display";
+                }
+            }*/
+            //闭包版的tab栏切换
+            /*for(var i=0;i<buttons.length;i++){
+                buttons[i].onmouseover = tab(i);
+            }
+            function tab(num) {//外层的函数会在页面加载时就执行完毕
+                console.log(num);
+                return function () {//这是一个闭包，内层的函数在鼠标经过时才执行
+                    console.log(num);
+                    for(var j=0;j<buttons.length;j++){
+                        buttons[j].style.backgroundColor="";
+                        bottoms[j].className="";
+                    }
+                    buttons[num].style.backgroundColor="pink";
+                    bottoms[num].className="display";
+                }
+            }*/
+            for(var i=0;i<buttons.length;i++){
+                buttons[i].onmouseover =function (num) {
+                    return function () {
+                        for(var j=0;j<buttons.length;j++){
+                            buttons[j].style.backgroundColor="";
+                            bottoms[j].className="";
+                        }
+                        buttons[num].style.backgroundColor="pink";
+                        bottoms[num].className="display";
+                    }
+                }(i);
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="top" id="top">
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+</div>
+<div class="bottom" id="bottom">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+</div>
+</body>
+</html>

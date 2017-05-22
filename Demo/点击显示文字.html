@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .top{
+            left:100px;
+            top:100px;
+            width:300px;
+            margin-bottom: 200px;
+        }
+        .bottom{
+            left:100px;
+            width: 300px;
+        }
+        .box{
+            width: 80px;
+            height: 80px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: yellow;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<span class="box" id="box"></span>
+<div class="top" id="top">
+    这是可以被选择的文字这是可以被选择的文字这是
+    可以被选择的文字这是可以被选择的文字这是可以被选择的文字
+    这是可以被选择的文字这是可以被选择的文字这是
+    可以被选择的文字这是可以被选择的文字这是可以被选择的文字
+    这是可以被选择的文字这是可以被选择的文字这是
+    可以被选择的文字这是可以被选择的文字这是可以被选择的文字
+</div>
+<div class="bottom">
+    这是不可以被选择的文字
+    这是不可以被选择的文字
+    这是不可以被选择的文字
+    这是不可以被选择的文字
+    这是不可以被选择的文字
+    这是不可以被选择的文字
+    这是不可以被选择的文字
+    这是不可以被选择的文字
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    function $(id) {
+        return document.getElementById(id);
+    }
+    var x = 0,y = 0,txt = null;
+    $("top").onmouseup = function (event) {
+        var event = event||window.event;
+        x = event.clientX;
+        y = event.clientY;
+        if(window.getSelection()){//选择文字，将选择的文字放入txt中，下面是兼容IE的写法
+            txt = window.getSelection().toString();
+        }
+        else{
+            txt = document.selection.createRange().text;
+        }
+        if(txt){
+            show(txt,x,y);
+        }
+    }
+    document.onmousedown = function () {
+        $("box").style.display = "none";
+    }
+    function show(txt,x,y) {
+        //var event = event||window.event;
+        $("box").style.display = "block";
+        $("box").style.left = x + "px";
+        $("box").style.top = y + "px";
+        $("box").innerHTML = txt;
+    }
+</script>

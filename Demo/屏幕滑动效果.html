@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        *{list-style: none;}
+        *{
+            margin: 0;
+            padding:0;
+        }
+        html,body{/*让每个li占满一个屏幕这里html和body必须都写*/
+            width: 100%;
+            height: 100%;
+        }
+        ul{
+            width: 100%;
+            height: 100%;
+        }
+        ul li{
+            background-color: pink;
+            width: 100%;
+            height: 100%;
+        }
+        ol{
+            position: fixed;
+            top:10px;
+            right:100px;
+            border-radius: 3px 3px;
+        }
+        ol li{
+            float: left;
+            width:100px;
+            cursor: pointer;
+        }
+        img{
+            position: fixed;
+            bottom:150px;
+            right:100px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<img src="images/Top.jpg" alt="" id="img">
+<ul id="ul">
+    <li>首页</li>
+    <li>新闻</li>
+    <li>关注</li>
+    <li>动态</li>
+    <li>风格</li>
+    <li>作品</li>
+    <li>联系我们</li>
+</ul>
+<ol id="ol">
+    <li>首页</li>
+    <li>新闻</li>
+    <li>关注</li>
+    <li>动态</li>
+    <li>风格</li>
+    <li>作品</li>
+    <li>联系我们</li>
+</ol>
+</body>
+</html>
+<script type="text/javascript">
+    function  scroll() {
+        if(window.pageXOffset != null){//注意这里都是window
+            return {
+                top:window.pageYOffset,
+                left:window.pageXOffset
+            }
+        }
+        else if(document.compatMode == "CSS1Compat"){//检测是否是怪异模式
+            //如果不是怪异模式
+            return {
+                top:document.documentElement.scrollTop,
+                left:document.documentElement.scrollLeft
+            }
+
+        }
+        return {
+            left:document.body.scrollLeft,
+            top:document.body.scrollTop
+        }
+    }
+    var ul = document.getElementById("ul");
+    var ol = document.getElementById("ol");
+    var img = document.getElementById("img");
+    var ullis = ul.children;
+    var ollis = ol.children;
+    var target = 0,leader = 0,timer = null,timer1 = null,leader1 = 0,target1 = 0;
+    window.onscroll = function (event) {
+        if(scroll().top == 0){
+            img.style.display = "none";
+            clearInterval(timer);//当回到顶部时就把定时器清理掉，否则不能再下拉
+        }
+        else{
+            img.style.display = "block";
+            leader = scroll().top;//起点应该是现在的位置，终点始终应该是0
+            img.onclick = function () {
+                clearInterval(timer1);
+                timer = setInterval(function () {
+                    leader = leader + (target - leader)/10;
+                    window.scrollTo(0,leader);
+                },20);
+            }
+        }
+    }
+    for(var i=0;i<ollis.length;i++){
+        ollis[i].index = i;
+        ollis[i].onclick = function () {
+            clearInterval(timer1);
+            var that =this;
+            target1 = ullis[this.index].offsetTop;
+            timer1 = setInterval(function () {
+                leader1 = leader1 + (target1 - leader1)/10;
+                console.log(parseInt(leader1));
+                if(parseInt(leader1) == parseInt(ullis[that.index].offsetTop)-1){
+                    //必须将其转化为整整数，否则清理不了，因为leader1只会接近于后面的值，不会等于
+                    clearInterval(timer1);
+                }
+                window.scrollTo(0,leader1);
+            },30);
+        }
+    }
+</script>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+         .big{
+             position: fixed;
+             border: 1px solid red;
+             left: 450px;
+         }
+        .big ul{
+            margin: 0;
+            padding:0;
+            margin-top:-3px;
+        }
+        .big ul li{
+            float: left;
+            margin: 0;
+            padding:0;
+            list-style: none;
+            border: 1px solid pink;
+        }
+        .big a{
+            display: block;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="big">
+        <img src="images/01big.jpg" alt="" id="img">
+        <ul>
+            <li><a><img src="images/01.jpg" alt="" id="li01"></a></li>
+            <li><a><img src="images/02.jpg" alt="" id="li02"></a></li>
+            <li><a><img src="images/03.jpg" alt="" id="li03"></a></li>
+            <li><a><img src="images/04.jpg" alt="" id="li04"></a></li>
+            <li><a><img src="images/05.jpg" alt="" id="li05"></a></li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    /*var li02=document.getElementById("li02");
+    var img=document.getElementById("img");
+    li02.onmouseover=function () {
+        img.src="images/02big.jpg";
+    }
+    var li01=document.getElementById("li01");
+    li01.onmouseover=function () {
+        img.src="images/01big.jpg";
+    }*/
+    //用函数实现
+    var img=document.getElementById("img");
+    function changeimg(id,img1){
+        var id1=document.getElementById(id);
+        id1.onmouseover=function () {
+            img.src=img1;
+        }
+    }
+    var lis=document.getElementsByTagName("li");
+
+    changeimg("li01","images/01big.jpg");
+    changeimg("li02","images/02big.jpg");
+    changeimg("li03","images/03big.jpg");
+    changeimg("li04","images/04big.jpg");
+    changeimg("li05","images/05big.jpg");
+   /*for(var i=0;i<lis.length;i++){
+        var id=lis[i+1];
+        changeimg(id,"images/0+"+(i+1)+"big.jpg");
+    }*/
+</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .clock{
+            height: 600px;
+            margin: auto;
+            width: 600px;
+            background:url("../images/clock.jpg") no-repeat;
+            position: relative;
+        }
+        .clock div{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top:0;
+            left: 0;
+        }
+        .h{
+            background: url("../images/hour.png") no-repeat center center;
+        }
+        .m{
+            background: url("../images/minute.png") no-repeat center center;
+        }
+        .s{
+            background: url("../images/second.png") no-repeat center center;
+        }
+
+    </style>
+</head>
+<body>
+<div class="clock">
+    <div class="h" id="hour"></div>
+    <div class="m" id="minute"></div>
+    <div class="s" id="second"></div>
+</div>
+</body>
+<script>
+    var hour=document.getElementById("hour");
+    var minute=document.getElementById("minute");
+    var second=document.getElementById("second");
+
+    var s=0,m=0,h=0,ms=0;
+    //开启定时器
+    setInterval(function(){
+        var date = new Date();
+        ms = date.getMilliseconds();
+        s = date.getSeconds()+ms/1000;
+        m = date.getMinutes()+s/60;
+        h = (date.getHours())%12+m/60;
+        alert(h);
+        //旋转角度
+        second.style.webkitTransform = "rotate("+s*6+"deg)";//秒针每单位时间转六度
+        minute.style.webkitTransform = "rotate("+m*6+"deg)";
+        hour.style.webkitTransform="rotate("+h*30+"deg)";//时针每小时转30读
+    },1000);
+</script>
+</html>

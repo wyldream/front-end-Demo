@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .scroll{
+            width: 400px;
+            height:8px;
+            background-color: #ccc;
+            position: relative;
+            margin:100px 200px;
+        }
+        .bar{
+            width: 8px;
+            height:20px;
+            background-color: #369;
+            position: absolute;
+            top:-6px;
+            left:0;
+        }
+        .blue{
+            background-color: #369;
+            height:8px;
+            width: 0;
+            position: absolute;
+            top:0;
+            left:0;
+        }
+        .text{
+            width: 200px;
+            height:30px;
+        }
+    </style>
+</head>
+<body>
+<div class="scroll" id="scroll">
+    <div class="bar"></div>
+    <div class="blue"></div>
+</div>
+<div class="text" id="text"></div>
+</body>
+<script type="text/javascript">
+    var scroll = document.getElementById("scroll");
+    var bar = scroll.children[0];
+    var blue = scroll.children[1];
+    var text = document.getElementById("text");
+    var x = 0;
+    bar.onmousedown = function (event) {
+        var event = event||window.event;
+        x = event.clientX - this.offsetLeft;
+        document.onmousemove = function (event) {
+            var event = event||window.event;
+            var length = event.clientX - x;
+            if(length < 0){
+                length = 0;
+            }
+            else if(length>=390){
+                length = 400;
+            }
+            bar.style.left = length +"px";
+            blue.style.width = length + "px";
+            text.innerHTML = "当前移动了"+parseInt(length/400*100)+"%";
+        }
+        document.onmouseup = function () {
+            document.onmousemove = null;
+        }
+    }
+</script>
+</html>

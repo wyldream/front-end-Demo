@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .big{
+            width: 500px;
+            height:200px;
+            margin:100px auto;
+            border:1px dotted #ccc;
+            padding: 10px;
+            overflow: hidden;
+        }
+        .box{
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        ul{
+            padding:0;
+            margin: 0;
+            width: 3000px;
+            position: absolute;
+        }
+        ul li{
+            float: left;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            float: left;
+        }
+        ol{
+            position: absolute;
+            right:20px;
+            bottom:20px;
+            margin: 0;
+            padding: 0;
+        }
+        ol li{
+            width: 15px;
+            line-height: 15px;
+            margin-right: 5px;
+            background-color: #fff;
+            text-align: center;
+            float: left;
+            list-style: none;
+            cursor: pointer;
+        }
+        .current{
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<div class="big">
+    <div class="box" id="box">
+        <ul id="ul">
+            <li><img src="images/l1.jpg"> </li>
+            <li><img src="images/l2.jpg"> </li>
+            <li><img src="images/l3.jpg"> </li>
+            <li><img src="images/l4.jpg"> </li>
+            <li><img src="images/l5.jpg"> </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var ul = document.getElementById("ul");
+    var box = document.getElementById("box");
+    var lis = ul.children;
+    //动态创建ol并插入
+    var ol = document.createElement("ol");
+    box.appendChild(ol);
+    for(var i=0;i<lis.length;i++){
+        var li = document.createElement("li");
+        li.innerHTML = i+1;
+        ol.appendChild(li);
+    }
+    //动态克隆第一张图片插在最后
+    ul.appendChild(lis[0].cloneNode(true));//
+    var ollis = ol.children;
+    //动画函数
+    function animate(obj,target) {
+        clearInterval(obj.timer);//每次调用前先清理
+        var speed = obj.offsetLeft - target > 0 ? -5:5;//比目标位置大就加否则减
+        obj.timer = setInterval(function () {
+            var range = obj.offsetLeft - target;//求他们之间的距离
+            obj.style.left = obj.offsetLeft + speed +"px";
+            if(Math.abs(range)<=10){//在这个距离之间就停止
+                clearInterval(obj.timer);
+                obj.style.left = target + "px";
+            }
+        },10);
+    }
+    //鼠标经过时滚动
+    for(var i=0;i<ollis.length;i++){
+        ollis[i].index = i;
+        ollis[i].onmouseover = function (event) {
+            for(var j=0;j<ollis.length;j++){
+                ollis[j].className = "";
+            }
+            //调用动画函数实现滚动
+            animate(ul,-(this.index) * 500);
+            this.className = "current";
+            k = this.index;
+        }
+    }
+    //自动滚动
+    var k=0,s = 0;
+    var timer1 = setInterval(autoplay,1000);
+    ollis[0].className = "current";
+    function autoplay() {
+        k++;
+        if(k > lis.length-1){
+            k = 1;
+            ul.style.left = 0;
+            //ollis[0].className = "current";
+        }
+        animate(ul,-k*500);
+        s++;
+        if(s > ollis.length - 1){
+            s = 0;
+        }
+        for(var i=0;i<ollis.length;i++){
+            ollis[i].className = "";
+        }
+        ollis[s].className = "current";
+    }
+    //鼠标移到上面停止滚动，移开开始滚动
+    box.onmouseover = function () {
+        clearInterval(timer1);
+    }
+    box.onmouseout = function () {
+        timer1 = setInterval(autoplay,3000);
+    }
+</script>

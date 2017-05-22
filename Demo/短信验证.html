@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text">
+<button id="sendMessage">发送短信验证</button>
+</body>
+<script type="text/javascript">
+    window.onload=function () {
+        var btn = document.getElementById("sendMessage");
+        var count = 5;
+        var timer = null;
+        btn.onclick = function () {
+            btn.disabled = true;
+            timer = setInterval(sendMessage,1000);
+            var that = this;
+            function sendMessage(){
+                count--;
+                if(count>=0){
+                    that.innerHTML = "请在"+count+"秒后重新发送";
+                }
+               if(count==0){
+                    count = 5;
+                    that.innerHTML = "重新发送";
+                    that.disabled = false;
+                    clearInterval(timer);//清除定时器，不清楚定时器会自动不断点击
+               }
+            }
+        }
+    }
+</script>
+</html>

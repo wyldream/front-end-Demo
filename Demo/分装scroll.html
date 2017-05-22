@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        body{
+            height:3000px;
+        }
+    </style>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+    function scroll() {
+        if(document.pageXOffset != null){
+            return {
+                top:document.pageYOffset,
+                left:document.pageXOffset
+            }
+        }
+        else if(document.compatMode = "CSS1Compat"){//检测是否是怪异模式
+            //如果不是怪异模式
+            return {
+                top:document.documentElement.scrollTop,
+                left:document.documentElement.scrollLeft
+            }
+
+        }
+        return {
+            top:document.body.scrollTop,
+            left:document.body.scrollLeft
+        }
+
+    }
+    window.onscroll = function () {
+        console.log(scroll().top);
+    }
+
+</script>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        body{
+            height: 3000px;
+            background-color: #888;
+        }
+        ul li{
+            list-style:none;
+            float: left;
+            width: 40px;
+            cursor: pointer;
+        }
+        .box{
+            width: 500px;
+            height: 300px;
+            position: fixed;
+            margin: 150px 400px;
+            background-color: #fff;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li><a href="javascript:;" id="login"> 登陆</a></li>
+    <li><a href="javascript:;"> 注册</a></li>
+</ul>
+<div class="box" id="box"></div>
+</body>
+</html>
+<script>
+    var login = document.getElementById("login");
+    var box = document.getElementById("box");
+    login.onclick = function (event) {
+        box.style.display = "block";
+        var event = event||window.event;
+        document.body.style.overflow = "hidden";//不显示滚动条
+        if(event && event.stopPropagation){//阻止冒泡
+            event.stopPropagation();
+        }else{
+            event.cancelable = true;
+        }
+    }
+    document.onclick = function (event) {//必须阻止冒泡后上面的点击才有效果
+        var event = event||window.event;
+        var targetId = event.target?event.target.id:event.srcElement.id;//获得被点击的目标
+        //兼容的写法，前面正常浏览器后面是IE
+        if(targetId != "box"){//点击了除了它自身以外的空白处，则消失，并显示滚动条
+            box.style.display = "none";
+            document.body.style.overflow = "block";
+        }
+    }
+</script>

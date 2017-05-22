@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .box{
+            width:100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            top:30px;
+            left:10px;
+        }
+    </style>
+</head>
+<body>
+<button id="400b">400</button>
+<button id="200b">200</button>
+<div class="box"></div>
+</body>
+</html>
+<script type="text/javascript">
+    function $(id) {
+        return document.getElementById(id);
+    }
+    var b1 = $("400b");
+    var b2 = $("200b");
+    var box = document.getElementsByClassName("box")[0];
+    b1.onclick = function () {
+        animate(box,400);
+    }
+    b2.onclick = function () {
+        animate(box,200);
+    }
+    function animate(obj,target) {
+        clearInterval(obj.timer);//每次调用前先清理
+        var speed = obj.offsetLeft - target > 0 ? -10:10;//比目标位置大就加否则减
+        obj.timer = setInterval(function () {
+            var range = obj.offsetLeft - target;//求他们之间的距离
+            obj.style.left = obj.offsetLeft + speed +"px";
+            if(Math.abs(range)<=10){//在这个距离之间就停止
+                clearInterval(obj.timer);
+                obj.style.left = target + "px";
+            }
+        },20);
+    }
+</script>

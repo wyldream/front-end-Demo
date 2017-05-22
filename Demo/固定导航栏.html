@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin:0;padding:0}
+        img{
+            vertical-align: top;
+        }
+        .main{
+            margin:0 auto;
+            width:1000px;
+            margin-top:10px;
+
+        }
+        .fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="top" id="top">
+    <img src="images/top.png" alt=""/>
+</div>
+<div class="nav" id="Q-nav">
+    <img src="images/nav.png" alt=""/>
+</div>
+<div class="main">
+    <img src="images/main.png" alt=""/>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="my.js"></script>
+<script type="text/javascript">
+    var nav = $("Q-nav");
+    var top = $("top");
+    var main = $("main");
+    window.onscroll = function (event) {
+        console.log(scroll().top);
+        if(scroll().top>168){
+            nav.className = "nav fixed";
+        }
+        else{
+            nav.className = "nav";
+        }
+    }
+</script>

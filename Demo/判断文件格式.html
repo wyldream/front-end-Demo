@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="file" id="file"><span></span><!-- 文件域 -->
+</body>
+<script type="text/javascript">
+    var file = document.getElementById("file");
+    file.onchange = function () {//当域内容改变时执行
+        var value1 =  this.value;
+        var str = value1.slice(value1.lastIndexOf(".")).toLowerCase();
+        if(str == ".jpg"||str == ".png"){
+            file.nextSibling.innerHTML = "格式正确";
+        }
+        else{
+            file.nextSibling.innerHTML = "格式错误";
+        }
+    }
+</script>
+</html>

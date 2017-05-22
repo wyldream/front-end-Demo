@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: #23ee76;
+            position: absolute;
+            top:10px;
+            left:10px;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box"></div>
+</body>
+</html>
+<script type="text/javascript">
+    //获得css属性的两种方法一种是用点，一种是中括号
+    function getStyle(obj,attr) {//通过点只能获得行内的css属性，这样可以得到任意的css属性
+        if(obj.currentStyle){//ie等
+            return obj.currentStyle[attr];
+        }
+        else {//标准浏览器
+            return window.getComputedStyle(obj,null)[attr];//第一个是元素，第二个参数是伪类
+        }
+    }
+    var box = document.getElementById("box");
+    var result = getStyle(box,"width");
+    var result1 = getStyle(box,"left");
+    var result2 = getStyle(box,"position");
+    console.log(result);
+    console.log(result1);
+    console.log(result2);
+</script>

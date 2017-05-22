@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        li{list-style: none;}
+        body{
+            background-color: #000;
+            margin:0;
+            padding:0;
+        }
+        .box{
+            width:800px;
+            height:42px;
+            margin: 100px auto;
+            position: relative;
+            border-radius: 5px;
+            background: url("images/rss.png") no-repeat right center #fff;
+        }
+        .cloud{
+            background: url("images/cloud.gif") no-repeat;
+            position: absolute;
+            left:0;
+            top:0;
+            width: 83px;
+            height: 42px;
+        }
+        ul{
+            padding:0;
+            position: absolute;
+            margin: 0;
+        }
+        ul li{
+            float: left;
+            width:83px;
+            line-height: 42px;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box">
+    <span class="cloud"></span>
+    <ul id="ul">
+        <li>首页新闻</li>
+        <li>师资力量</li>
+        <li>活动策划</li>
+        <li>企业文化</li>
+        <li>招聘信息</li>
+        <li>公司简介</li>
+        <li>上海校区</li>
+        <li>广州小区</li>
+    </ul>
+</div>
+</body>
+<script type="text/javascript">
+    var box = document.getElementById("box");
+    var cloud = box.children[0];
+    var lis = box.children[1].children;
+    var target = 0,leader = 0,current = 0;
+    for(var i=0;i<lis.length;i++){
+        lis[i].onmouseover = function () {
+            target = this.offsetLeft;
+        }
+        lis[i].onclick = function () {
+            current = this.offsetLeft;
+            //点击时，target的值不变，所以图会在原地
+        };
+        lis[i].onmouseout = function () {
+            target = current;
+            //未点击时。currrent=0，鼠标离开回到最左边，点击后，鼠标离开回到点击位置
+        }
+    }
+    //在定时器外面target是改变的，代表终点位置
+    //在定时器内部leader是改变的，代表了离开起始点的距离
+    setInterval(function(){
+        leader = leader+(target - leader)/10;
+        cloud.style.left = leader + "px";
+    },10);
+</script>
+</html>

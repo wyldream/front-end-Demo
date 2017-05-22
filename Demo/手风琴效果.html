@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        div{
+            height: 460px;
+            width: 1500px;
+            border: 1px solid red;
+            margin:100px 0;
+        }
+        ul{
+            width: 3000px;
+        }
+        ul li{
+            list-style: none;
+            width: 280px;
+            height: 460px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+</body>
+<script type="text/javascript">
+    var divs = document.getElementsByTagName("div")[0];
+    var lis = divs.children[0].children;
+    for(var i=0;i<lis.length;i++){
+        //antimate3(lis[i],{width:100});
+        //console.log(lis[i]);
+        lis[i].style.backgroundImage = "url(images/s"+(i+1)+".jpg)";//注意向背景中添加图片要用url
+        lis[i].onmouseover = function () {
+            for(var j=0;j<lis.length;j++){
+                antimate3(lis[j],{width:150});
+            }
+            antimate3(this,{width:800});
+        }
+    }
+    var timer = null;
+    function antimate3(obj,json) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            var flag = true;
+            for(var attr in json){//遍历json,attr是属性，current是style中的属性值，json[attr]是json中的（属性）值
+                var current = parseInt(getStyle(obj,attr));//当前属性值
+                var step = (json[attr] - current)/10;//json中的值即为目标位置
+                //console.log(step);
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                obj.style[attr] = current + step + "px";
+                if(json[attr] != current){//只要还有一个属性没有到达目标地点就不停止
+                    flag = false;
+                }
+            }
+            if(flag){
+                clearInterval(obj.timer);
+            }
+        },20);
+    }
+    function getStyle(obj,attr) {//通过点只能获得行内的css属性，这样可以得到任意的css属性
+        //console.log(box);
+        if(obj.currentStyle){//ie等
+            return obj.currentStyle[attr];
+        }
+        else {//标准浏览器
+            return window.getComputedStyle(obj,null)[attr];//第一个是元素，第二个参数是伪类
+        }
+    }
+</script>
+</html>

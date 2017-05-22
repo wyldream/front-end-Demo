@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .box{
+            width: 490px;
+            height: 170px;
+            border:1px solid red;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        ul{
+            margin: 0;
+            padding:0;
+            width: 2450px;
+            position: absolute;
+        }
+        li{
+            list-style:none;
+            float: left;
+        }
+        ol{
+            position: absolute;
+            left:50%;
+            bottom:-5px;
+            margin-left: -100px;
+        }
+        ol li{
+            width:18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: pink;
+            margin-left: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .current{
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <ul id="img">
+        <li><img src="images/a1.jpg" alt="" id="img1"></li>
+        <li><img src="images/a2.jpg" alt="" id="img2"></li>
+        <li><img src="images/a3.jpg" alt="" id="img3"></li>
+        <li><img src="images/a4.jpg" alt="" id="img4"></li>
+        <li><img src="images/a5.jpg" alt="" id="img5"></li>
+    </ul>
+    <ol>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ol>
+</div>
+</body>
+<script type="text/javascript">
+    var ol = document.getElementsByTagName("ol")[0];
+    var ollis = ol.children;
+    var img = document.getElementById("img");
+    var begin = 0,target = 0;
+    for(var i=0;i<ollis.length;i++){
+        ollis[i].index = i;
+        ollis[i].onmouseover = function () {
+            for(var j=0;j<ollis.length;j++){
+                ollis[j].className = "";
+            }
+            this.className = "current";
+            target = -this.index * 490;
+        }
+    }
+    setInterval(function () {
+        begin = begin + (target - begin)/10;
+        img.style.left = begin + "px";
+    },30);//不要放在循环里面，放在里面会创建多个定时器，会互相影响
+</script>
+</html>

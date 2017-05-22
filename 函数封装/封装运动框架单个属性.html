@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .box{
+            width:100px;
+            height: 100px;
+            position: fixed;
+            left:0;
+            top:30px;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<button id="b1">200</button>
+<button id="b2">400</button>
+<div class="box" id="box"></div>
+</body>
+</html>
+<script type="text/javascript">
+    function $(id) {
+        return document.getElementById(id);
+    }
+    var b1 = $("b1");
+    var b2 = $("b2");
+    var box = $("box");
+    b1.onclick = function () {
+        antimate2(box,"left",200);
+    }
+    b2.onclick = function () {
+        antimate2(box,"top",400);
+    }
+    var timer = null;
+    function antimate2(obj,attr,target) {
+        setInterval(function () {
+            var current =parseInt(getStyle(obj,attr));//获得当前属性
+            var step = (target - current)/10;
+            step = step > 0 ? Math.ceil(step) : Math.floor(step);
+            obj.style[attr] = current + step + "px";
+            if(current == target){
+                clearInterval(timer);
+            }
+        },20)
+    }
+    //获得css属性的两种方法一种是用点，一种是中括号
+    function getStyle(obj,attr) {//通过点只能获得行内的css属性，这样可以得到任意的css属性
+        //console.log(box);
+        if(obj.currentStyle){//ie等
+            return obj.currentStyle[attr];
+        }
+        else {//标准浏览器
+            return window.getComputedStyle(obj,null)[attr];//第一个是元素，第二个参数是伪类
+        }
+    }
+</script>

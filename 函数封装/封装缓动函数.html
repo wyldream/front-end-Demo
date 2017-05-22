@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .box{
+            width:100px;
+            height: 100px;
+            background-color: red;
+            position: fixed;
+            top: 30px;
+        }
+        b1,b2{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<button id="b1">200</button>
+<button id="b2">400</button>
+<div class="box" id="box"></div>
+</body>
+</html>
+<script type="text/javascript">
+    var b1 = document.getElementById("b1");
+    var b2 = document.getElementById("b2");
+    var box = document.getElementById("box");
+    b1.onclick = function () {
+        antimate1(box,200);
+    }
+    b2.onclick = function () {
+        antimate1(box,400);
+    }
+    var timer = null;
+    function antimate1(obj,target) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            var step = (target - obj.offsetLeft)/10;
+            var step = step > 0 ? Math.ceil(step) : Math.floor(step);
+            obj.style.left = obj.offsetLeft + step + "px";
+            if(obj.offsetLeft == target){
+                clearInterval(obj.timer);
+            }
+        },20);
+    }
+</script>

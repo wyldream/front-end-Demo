@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .box{
+            width:100px;
+            height: 100px;
+            position: fixed;
+            left:0;
+            top:30px;
+            background-color: yellow;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<button id="b1">200</button>
+<button id="b2">400</button>
+<div class="box" id="box"></div>
+</body>
+</html>
+<script type="text/javascript">
+    var b1 = document.getElementById("b1");
+    var b2 = document.getElementById("b2");
+    var box = document.getElementById("box");
+    b1.onclick = function () {
+        antimate3(box,{left:200,top:200,width:200,height:200});
+    }
+    b2.onclick = function () {
+        antimate3(box,{left:500,top:250,width:400,height:400});
+    }
+    var timer = null;
+    function antimate3(obj,json) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {//这里一定要加上obj，否则用循环多次快速调用时会出错
+            var flag = true;
+            for(var attr in json){//遍历json,attr是属性，current是style中的属性值，json[attr]是json中的（属性）值
+                var current = parseInt(getStyle(obj,attr));//当前属性值
+                var step = (json[attr] - current)/10;//json中的值即为目标位置
+                //console.log(step);
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                obj.style[attr] = current + step + "px";
+                if(json[attr] != current){//只要还有一个属性没有到达目标地点就不停止
+                    flag = false;
+                }
+            }
+            if(flag){
+                clearInterval(obj.timer);
+            }
+        },20);
+    }
+    function getStyle(obj,attr) {//通过点只能获得行内的css属性，这样可以得到任意的css属性
+        //console.log(box);
+        if(obj.currentStyle){//ie等
+            return obj.currentStyle[attr];
+        }
+        else {//标准浏览器
+            return window.getComputedStyle(obj,null)[attr];//第一个是元素，第二个参数是伪类
+        }
+    }
+</script>
